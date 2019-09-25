@@ -17,11 +17,10 @@ action "python.flake8" {
 action "python.test" {
   uses = "actions/docker/cli@master"
   needs = ["python.build"]
-  args = "run ci-$GITHUB_SHA:latest "
   secrets = [
     "SECRET_KEY",
   ]
-  runs = "python manage.py test eventex"
+  runs = "run ci-$GITHUB_SHA:latest python manage.py test eventex"
 }
 
 action "git.master" {
