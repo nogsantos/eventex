@@ -20,7 +20,7 @@ action "python.test" {
   secrets = [
     "SECRET_KEY",
   ]
-  runs = "run ci-$GITHUB_SHA:latest python manage.py test eventex"
+  args = "python manage.py test eventex"
 }
 
 action "git.master" {
