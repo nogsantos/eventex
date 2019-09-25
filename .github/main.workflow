@@ -24,6 +24,12 @@ action "python.test" {
   args = "run ci-$GITHUB_SHA:latest echo 'run the tests...'"
 }
 
+action "python.staticfile" {
+  uses = "actions/docker/cli@master"
+  needs = ["python.flake8", "python.test"]
+  args = "run ci-$GITHUB_SHA:latest python manage.py collectstatic --noinput"
+}
+
 action "git.master" {
   uses = "actions/bin/filter@master"
   needs = ["python.flake8", "python.test"]
@@ -44,11 +50,9 @@ action "heroku.push" {
   secrets = [
     "HEROKU_API_KEY",
     "HEROKU_APP",
+    "ALLOWED_HOSTS",
+    "DEBUG",
   ]
-  env = {
-    ALLOWED_HOSTS="127.0.0.1, .localhost, .herokuapp.com",
-    DEBUG="False"
-  }
 }
 
 action "heroku.envs" {
@@ -62,11 +66,9 @@ action "heroku.envs" {
     "HEROKU_API_KEY",
     "HEROKU_APP",
     "SECRET_KEY",
+    "ALLOWED_HOSTS",
+    "DEBUG",
   ]
-  env = {
-    ALLOWED_HOSTS="127.0.0.1, .localhost, .herokuapp.com",
-    DEBUG="False"
-  }
 }
 
 action "heroku.deploy" {
@@ -77,9 +79,7 @@ action "heroku.deploy" {
     "HEROKU_API_KEY",
     "HEROKU_APP",
     "SECRET_KEY",
+    "ALLOWED_HOSTS",
+    "DEBUG",
   ]
-  env = {
-    ALLOWED_HOSTS="127.0.0.1, .localhost, .herokuapp.com",
-    DEBUG="False" 
-  }
 }
