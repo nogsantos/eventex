@@ -40,7 +40,7 @@ action "heroku.login" {
 action "heroku.push" {
   uses = "actions/heroku@master"
   needs = "heroku.login"
-  args = ["container:push", "web: gunicorn eventex.wsgi --log-file -"]
+  args = ["container:push", "web"]
   secrets = [
     "HEROKU_API_KEY",
     "HEROKU_APP",
@@ -72,7 +72,7 @@ action "heroku.envs" {
 action "heroku.deploy" {
   uses = "actions/heroku@master"
   needs = ["heroku.envs", "heroku.push"]
-  args = ["container:release", "web: gunicorn eventex.wsgi --log-file -"]
+  args = ["container:release", "web"]
   secrets = [
     "HEROKU_API_KEY",
     "HEROKU_APP",
