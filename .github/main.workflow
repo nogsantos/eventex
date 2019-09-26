@@ -5,7 +5,7 @@ workflow "Eventex" {
 
 action "python.build" {
   uses = "actions/docker/cli@master"
-  args = "build -f Dockerfile -t ci-$GITHUB_SHA:latest ."
+  args = "build -f Dockerfile -t ci-$GITHUB_SHA:latest ."  
 }
 
 action "python.flake8" {
@@ -17,10 +17,11 @@ action "python.flake8" {
 action "python.test" {
   uses = "actions/docker/cli@master"
   needs = ["python.build"]
+  args = "run ci-$GITHUB_SHA:latest python ./manage.py test"  
   secrets = [
     "SECRET_KEY",
+    "ALLOWED_HOSTS",
   ]
-  args = "run ci-$GITHUB_SHA:latest python ./manage.py test eventex"
 }
 
 action "git.master" {

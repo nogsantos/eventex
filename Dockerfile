@@ -11,9 +11,14 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-ENV DJANGO_SETTINGS_MODULE=eventex.settings
-ENV ALLOWED_HOSTS=$ALLOWED_HOSTS
-ENV DEBUG=$DEBUG
-ENV SECRET_KEY=$SECRET_KEY
+ARG SECRET_KEY=$SECRET_KEY
+ARG DEBUG=$DEBUG
+ARG ALLOWED_HOSTS=$ALLOWED_HOSTS
+
+# Copies your code file from your action repository to the filesystem path `/` of the container
+COPY entrypoint.sh /entrypoint.sh
+
+# Code file to execute when the docker container starts up (`entrypoint.sh`)
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD gunicorn eventex.wsgi --log-file -
