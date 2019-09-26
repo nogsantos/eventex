@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev &&  \
 
 RUN pip3 install -r requirements.txt
 
-COPY . .
+ARG DJANGO_SETTINGS_MODULE=eventex.settings
+ARG ALLOWED_HOSTS=127.0.0.1,.localhost,.herokuapp.com
 
 ARG SECRET_KEY=$SECRET_KEY
 ARG DEBUG=$DEBUG

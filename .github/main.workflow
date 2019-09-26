@@ -5,7 +5,7 @@ workflow "Eventex" {
 
 action "python.build" {
   uses = "actions/docker/cli@master"
-  args = "build -f Dockerfile -t ci-$GITHUB_SHA:latest ."  
+  args = "build -f Dockerfile -t ci-$GITHUB_SHA:latest ."
 }
 
 action "python.flake8" {
@@ -17,11 +17,14 @@ action "python.flake8" {
 action "python.test" {
   uses = "actions/docker/cli@master"
   needs = ["python.build"]
-  args = "run ci-$GITHUB_SHA:latest python ./manage.py test"  
+  args = "run ci-$GITHUB_SHA:latest python ./manage.py test"
   secrets = [
     "SECRET_KEY",
-    "ALLOWED_HOSTS",
   ]
+  env = {
+    ALLOWED_HOSTS = "0.0.0.0"
+    DJANGO_SETTINGS_MODULE = "eventex.settings"
+  }
 }
 
 action "git.master" {
@@ -43,8 +46,11 @@ action "heroku.push" {
   args = ["container:push", "web"]
   secrets = [
     "HEROKU_API_KEY",
-    "HEROKU_APP",    
+    "HEROKU_APP",
   ]
+  env = {
+    ALLOWED_HOSTS = "0.0.0.0"
+  }
 }
 
 action "heroku.envs" {
@@ -52,7 +58,8 @@ action "heroku.envs" {
   needs = "heroku.push"
   secrets = [
     "HEROKU_API_KEY",
-    "HEROKU_APP",    
+    "HEROKU_APP",
+    "SECRET_KEY",
   ]
 }
 
@@ -62,6 +69,7 @@ action "heroku.deploy" {
   args = ["container:release", "web"]
   secrets = [
     "HEROKU_API_KEY",
-    "HEROKU_APP",    
+    "HEROKU_APP",
+    "SECRET_KEY",
   ]
 }
