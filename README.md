@@ -49,3 +49,15 @@ heroku config:set [CHAVE]=[VALOR]
 ```bash
 git push heroku master --force
 ```
+
+## Docs
+
+Em docs, os módulos possuirão os requisitos
+
+### Cenários
+
+Devem possuir as sessões de:
+
+- **Contexto**: Descreve o estado inicial
+- **Ação**: O que irá ocorrer após o estado inicial
+- **Resultado / Expectativa**: Após a ação, o que deve ocorrer
