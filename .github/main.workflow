@@ -24,12 +24,6 @@ action "python.test" {
   args = "run ci-$GITHUB_SHA:latest echo 'run the tests...'"
 }
 
-action "python.staticfile" {
-  uses = "actions/docker/cli@master"
-  needs = ["python.flake8", "python.test"]
-  args = "run ci-$GITHUB_SHA:latest python manage.py collectstatic --noinput"
-}
-
 action "git.master" {
   uses = "actions/bin/filter@master"
   needs = ["python.flake8", "python.test"]
@@ -68,6 +62,12 @@ action "heroku.envs" {
     "SECRET_KEY",
     "ALLOWED_HOSTS",
     "DEBUG",
+    "EMAIL_BACKEND",
+    "EMAIL_HOST",
+    "EMAIL_PORT",
+    "EMAIL_USE_TLS",
+    "EMAIL_HOST_USER",
+    "EMAIL_HOST_PASSWORD",
   ]
 }
 

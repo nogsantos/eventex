@@ -9,7 +9,7 @@ RUN apt-get clean && \
 
 RUN pip3 install -r requirements.txt
 
-ARG DJANGO_SETTINGS_MODULE=server.settings
+ARG DJANGO_SETTINGS_MODULE=eventex.settings
 
 ENV ALLOWED_HOSTS=$ALLOWED_HOSTS
 ENV DEBUG=$DEBUG

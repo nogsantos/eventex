@@ -18,7 +18,7 @@ Para publicar uma aplicação python no heroku, duas lib são necessárias, por�
 - [psycopg2](https://pypi.org/project/psycopg2/)
   - Drive do banco PostgreSQL para o django utilizado pelo heroku
 
-## Publicar app no heroku
+## Heroku
 
 **Autenticar na conta**
 
@@ -44,10 +44,28 @@ heroku open
 heroku config:set [CHAVE]=[VALOR]
 ```
 
+**Visualiza as configuracoes definidas no heroku**
+
+```bash
+heroku config
+```
+
 **Envia o projeto**
 
 ```bash
 git push heroku master --force
+```
+
+**Habilita sendgrid para envio de emails**
+
+> Ao abrir a documentação do sendgrind, no heroku está exemplificado usando o pacote do próprio sendgrid, sendo necessário a instalação dele no projeto para isso. No caso, nesse projeto, não será utilizado esse pacote, usaremos o próprio smtp para isso.
+
+```bash
+heroku addons:create sendgrid:starter
+--return
+Creating sendgrid:starter on ⬢ eventex-nogsantos... free
+Created sendgrid-animated-85358 as SENDGRID_PASSWORD, SENDGRID_USERNAME
+Use heroku addons:docs sendgrid to view documentation
 ```
 
 ## Docs
