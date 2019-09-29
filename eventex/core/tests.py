@@ -12,3 +12,7 @@ class HomeTest(TestCase):
     def test_index_default_template(self):
         """Should render index.html as index template"""
         self.assertTemplateUsed(self.response, 'index.html')
+
+    def test_subscription_link(self):
+        """Should render subscription link"""
+        self.assertContains(self.response, 'href="/subscriptions/"')
