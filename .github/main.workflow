@@ -43,9 +43,7 @@ action "heroku.push" {
   args = ["container:push", "web"]
   secrets = [
     "HEROKU_API_KEY",
-    "HEROKU_APP",
-    "ALLOWED_HOSTS",
-    "DEBUG",
+    "HEROKU_APP",    
   ]
 }
 
@@ -58,16 +56,7 @@ action "heroku.envs" {
   ]
   secrets = [
     "HEROKU_API_KEY",
-    "HEROKU_APP",
-    "SECRET_KEY",
-    "ALLOWED_HOSTS",
-    "DEBUG",
-    "EMAIL_BACKEND",
-    "EMAIL_HOST",
-    "EMAIL_PORT",
-    "EMAIL_USE_TLS",
-    "EMAIL_HOST_USER",
-    "EMAIL_HOST_PASSWORD",
+    "HEROKU_APP",    
   ]
 }
 
@@ -77,9 +66,6 @@ action "heroku.deploy" {
   args = ["container:release", "web"]
   secrets = [
     "HEROKU_API_KEY",
-    "HEROKU_APP",
-    "SECRET_KEY",
-    "ALLOWED_HOSTS",
-    "DEBUG",
+    "HEROKU_APP",    
   ]
 }
