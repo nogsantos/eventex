@@ -1,4 +1,4 @@
-workflow "Build, lint, test and deploy" {
+workflow "Eventex" {
   on = "push"
   resolves = "heroku.deploy" 
 }
@@ -50,10 +50,6 @@ action "heroku.push" {
 action "heroku.envs" {
   uses = "actions/heroku@master"
   needs = "heroku.push"
-  args = [
-    "config:set",
-    "SECRET_KEY=$SECRET_KEY",
-  ]
   secrets = [
     "HEROKU_API_KEY",
     "HEROKU_APP",    
