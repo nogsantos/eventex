@@ -3,19 +3,18 @@ workflow "Eventex" {
   resolves = "heroku.deploy"
 }
 
-action "python.build" {
-  uses = "actions/docker/cli@master"
+action "python.build" {  
   args = "build -f Dockerfile -t ci-$GITHUB_SHA:latest ."
 }
 
 action "python.flake8" {
-  uses = "actions/docker/cli@master"
+  uses = "ci-$GITHUB_SHA:latest"
   needs = ["python.build"]
   args = "run ci-$GITHUB_SHA:latest flake8 --exclude=eventex/migrations/ eventex/"
 }
 
 action "python.test" {
-  uses = "actions/docker/cli@master"
+  uses = "ci-$GITHUB_SHA:latest"
   needs = ["python.build"]
   args = "run ci-$GITHUB_SHA:latest python ./manage.py test"
   secrets = [
@@ -28,7 +27,7 @@ action "python.test" {
 }
 
 action "git.master" {
-  uses = "actions/bin/filter@master"
+  uses = "ci-$GITHUB_SHA:latest"
   needs = ["python.flake8", "python.test"]
   args = "branch master"
 }
