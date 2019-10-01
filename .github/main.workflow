@@ -3,7 +3,8 @@ workflow "Eventex" {
   resolves = "heroku.deploy"
 }
 
-action "python.build" {  
+action "python.build" {
+  uses = "actions/docker/cli@master"
   args = "build -f Dockerfile -t ci-$GITHUB_SHA:latest ."
 }
 
