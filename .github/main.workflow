@@ -11,13 +11,12 @@ action "python.build" {
 action "python.flake8" {
   uses = "actions/docker/cli@master"
   needs = ["python.build"]
-  args = "run eventex flake8 --exclude=eventex/migrations/ eventex/"
+  runs = "eventex flake8 --exclude=eventex/migrations/ eventex/"
 }
 
 action "python.test" {
   uses = "actions/docker/cli@master"
   needs = ["python.build"]
-  args = "run eventex python ./manage.py test"
   secrets = [
     "SECRET_KEY",
   ]
@@ -25,6 +24,7 @@ action "python.test" {
     ALLOWED_HOSTS = "0.0.0.0"
     DJANGO_SETTINGS_MODULE = "eventex.settings"
   }
+  runs = "eventex python ./manage.py test"
 }
 
 action "git.master" {
