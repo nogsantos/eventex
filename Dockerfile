@@ -7,15 +7,19 @@ COPY ./requirements.txt .
 RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev &&  \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archive/*.deb
 
-RUN pip3 install -r requirements.txt
+COPY . .
 
-ARG DJANGO_SETTINGS_MODULE=eventex.settings
-ARG ALLOWED_HOSTS=127.0.0.1,.localhost,.herokuapp.com
+ENV DJANGO_SETTINGS_MODULE=eventex.settings
+ENV ALLOWED_HOSTS=$ALLOWED_HOSTS
+ENV DEBUG=$DEBUG
+ENV SECRET_KEY=$SECRET_KEY
+ENV EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+ENV EMAIL_HOST=localhost
+ENV EMAIL_PORT=25
+ENV EMAIL_USE_TLS=True
+ENV EMAIL_HOST_USER=
+ENV EMAIL_HOST_PASSWORD=
 
-ARG SECRET_KEY=$SECRET_KEY
-ARG DEBUG=$DEBUG
-ARG ALLOWED_HOSTS=$ALLOWED_HOSTS
-
-RUN flake8 --exclude=eventex/migrations/ eventex/ && python ./manage.py test
+RUN pip install flake8 && flake8 --exclude=eventex/migrations/ eventex/ && python manage.py test
 
 CMD gunicorn eventex.wsgi --log-file -
