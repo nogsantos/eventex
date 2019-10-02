@@ -1,4 +1,43 @@
-# Eventex
+# Eventex [![Build Status](https://travis-ci.org/nogsantos/eventex.svg?branch=master)](https://travis-ci.org/nogsantos/eventex) | [![Maintainability](https://api.codeclimate.com/v1/badges/16789efdf99182761d1a/maintainability)](https://codeclimate.com/github/nogsantos/eventex/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/16789efdf99182761d1a/test_coverage)](https://codeclimate.com/github/nogsantos/eventex/test_coverage)
+
+## Setup
+
+1. Clone o repositorio
+2. Crie um virtualenv com Python 3.5
+3. Ative o virtualenv
+4. Instale as dependencias
+5. Configure a instancia com o .env
+6. Execute os testes
+
+```console
+git clone git@github.com:nogsantos/eventex.git
+cd eventex
+python -m venv .eventex
+source .eventex/bin/activate
+pip install -r requirements.txt
+cp contrib/env.sample .env
+python manage.py test
+```
+
+## Publish
+
+Dependencia [The Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+
+1. Crie uma instancia
+2. Envie as configuracoes para o heroku
+3. Defina uma SECRET_KEY segura para a instancia
+4. Defina DEBUG=False
+5. Configure o servico de email
+6. Envie o codigo
+
+```console
+heroku create my-new-instance
+heroku config:push
+heroku config:set SECRET_KEY='python contrib/secret_gen.py'
+heroku config:set DEBU=False
+# configura o email
+git push heroku master --force
+```
 
 ## Config lib
 
