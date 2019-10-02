@@ -16,10 +16,6 @@ ARG SECRET_KEY=$SECRET_KEY
 ARG DEBUG=$DEBUG
 ARG ALLOWED_HOSTS=$ALLOWED_HOSTS
 
-# Copies your code file from your action repository to the filesystem path `/` of the container
-COPY entrypoint.sh /entrypoint.sh
-
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/entrypoint.sh"]
+RUN flake8 --exclude=eventex/migrations/ eventex/ && python ./manage.py test
 
 CMD gunicorn eventex.wsgi --log-file -
