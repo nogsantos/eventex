@@ -28,7 +28,7 @@ action "python.test" {
 }
 
 action "git.master" {
-  uses = "eventex"
+  uses = "actions/bin/filter@maste"
   needs = ["python.flake8", "python.test"]
   args = "branch master"
 }
