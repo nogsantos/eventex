@@ -5,19 +5,19 @@ workflow "Eventex" {
 
 action "python.build" {
   uses = "actions/docker/cli@master"
-  args = "build -f Dockerfile -t ci-$GITHUB_SHA:latest ."
+  args = "build -f Dockerfile -t eventex ."
 }
 
 action "python.flake8" {
-  uses = "ci-$GITHUB_SHA:latest"
+  uses = "actions/docker/cli@master"
   needs = ["python.build"]
-  args = "run ci-$GITHUB_SHA:latest flake8 --exclude=eventex/migrations/ eventex/"
+  args = "run eventex flake8 --exclude=eventex/migrations/ eventex/"
 }
 
 action "python.test" {
-  uses = "ci-$GITHUB_SHA:latest"
+  uses = "actions/docker/cli@master"
   needs = ["python.build"]
-  args = "run ci-$GITHUB_SHA:latest python ./manage.py test"
+  args = "run eventex python ./manage.py test"
   secrets = [
     "SECRET_KEY",
   ]
@@ -28,7 +28,7 @@ action "python.test" {
 }
 
 action "git.master" {
-  uses = "ci-$GITHUB_SHA:latest"
+  uses = "eventex"
   needs = ["python.flake8", "python.test"]
   args = "branch master"
 }
