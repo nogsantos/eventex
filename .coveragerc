@@ -1,0 +1,7 @@
+[run]
+source = eventex
+omit =
+    eventex/**/migrations/*.py
+    eventex/**/tests/*.py
+    eventex/wsgi.py
+    eventex/settings.py

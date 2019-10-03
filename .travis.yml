@@ -1,17 +1,18 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID
+    - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN
 language: python
 python:
   - "3.5"
 install:
-  - cp contrib/env.sample .env
-  - pip install -q -r requirements.txt
+  - cp contrib/env.sample .env # To not broken decouple
+  - pip install -q -r requirements.txt coveralls
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - python manage.py test
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - coverage run manage.py test -v 3
+after_success:
+  - coveralls
