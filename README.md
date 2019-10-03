@@ -1,4 +1,6 @@
-# Eventex [![Build Status](https://travis-ci.org/nogsantos/eventex.svg?branch=master)](https://travis-ci.org/nogsantos/eventex) | [![Maintainability](https://api.codeclimate.com/v1/badges/16789efdf99182761d1a/maintainability)](https://codeclimate.com/github/nogsantos/eventex/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/16789efdf99182761d1a/test_coverage)](https://codeclimate.com/github/nogsantos/eventex/test_coverage)
+# Eventex 
+
+[![Build Status](https://travis-ci.org/nogsantos/eventex.svg?branch=master)](https://travis-ci.org/nogsantos/eventex) [![Maintainability](https://api.codeclimate.com/v1/badges/16789efdf99182761d1a/maintainability)](https://codeclimate.com/github/nogsantos/eventex/maintainability) [![Coverage Status](https://coveralls.io/repos/github/nogsantos/eventex/badge.svg?branch=master)](https://coveralls.io/github/nogsantos/eventex?branch=master)
 
 ## Setup
 
