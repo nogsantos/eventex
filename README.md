@@ -1,4 +1,4 @@
-# Eventex 
+# Eventex
 
 [![Build Status](https://travis-ci.org/nogsantos/eventex.svg?branch=master)](https://travis-ci.org/nogsantos/eventex) [![Maintainability](https://api.codeclimate.com/v1/badges/16789efdf99182761d1a/maintainability)](https://codeclimate.com/github/nogsantos/eventex/maintainability) [![Coverage Status](https://coveralls.io/repos/github/nogsantos/eventex/badge.svg?branch=master)](https://coveralls.io/github/nogsantos/eventex?branch=master)
 
@@ -16,7 +16,7 @@ git clone git@github.com:nogsantos/eventex.git
 cd eventex
 python -m venv .eventex
 source .eventex/bin/activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 cp contrib/env.sample .env
 python manage.py test
 ```
@@ -120,3 +120,11 @@ Devem possuir as sessões de:
 - **Contexto**: Descreve o estado inicial
 - **Ação**: O que irá ocorrer após o estado inicial
 - **Resultado / Expectativa**: Após a ação, o que deve ocorrer
+
+## Dev environment
+
+No projeto, está disponível o `django-extensions`, e em desenvolvimento o `Jupyter`. Juntos possibilitam o uso do notebook para facilitar o desenvolvimento e testes.
+
+```bash
+python manage.py shell_plus --notebook
+```
