@@ -11,9 +11,8 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-ENV DJANGO_SETTINGS_MODULE=eventex.settings
-ENV ALLOWED_HOSTS=$ALLOWED_HOSTS
-ENV DEBUG=$DEBUG
-ENV SECRET_KEY=$SECRET_KEY
+RUN cp contrib/env.sample .env
 
-CMD gunicorn eventex.wsgi --log-file -
+RUN python manage.py collectstatic --noinput
+
+RUN rm -rf contrib/ .env
