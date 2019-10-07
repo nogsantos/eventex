@@ -97,6 +97,14 @@ heroku config
 git push heroku master --force
 ```
 
+**Executar comandos no heroku**
+
+Para executar as migrations no heroku, no terminal
+
+```bash
+heroku run python manage.py migrate
+```
+
 **Habilita sendgrid para envio de emails**
 
 > Ao abrir a documentação do sendgrind, no heroku está exemplificado usando o pacote do próprio sendgrid, sendo necessário a instalação dele no projeto para isso. No caso, nesse projeto, não será utilizado esse pacote, usaremos o próprio smtp para isso.
@@ -127,4 +135,14 @@ No projeto, está disponível o `django-extensions`, e em desenvolvimento o `Jup
 
 ```bash
 python manage.py shell_plus --notebook
+```
+
+## Django model
+
+**dumpdata**
+
+O comando `dumpdata` gera um dump em `json` dos modelos criados nos apps para visualizacao no terminal
+
+```bash
+python manage.py dumpdata --indent 4 subscriptions
 ```
