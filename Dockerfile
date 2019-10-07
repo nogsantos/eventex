@@ -13,6 +13,8 @@ COPY . .
 
 RUN cp contrib/env.sample .env
 
+RUN python manage.py migrate
+
 RUN python manage.py collectstatic --noinput
 
 RUN rm -rf contrib/ .env
