@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core import mail
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -26,12 +26,15 @@ def create(request):
     if not form.is_valid():
         return render(request, 'subscriptions/form.html', {'form': form})
 
+    subscription = Subscription.objects.create(**form.cleaned_data)
+
+    # @todo: Fix to use model value
     _send_confirmed_subscription_mail(form.cleaned_data)
 
-    Subscription.objects.create(**form.cleaned_data)
-
     messages.success(request, 'Inscrição realizada com sucesso!')
-    return HttpResponseRedirect('/subscriptions/')
+    return HttpResponseRedirect(
+        '/subscriptions/{}/'.format(subscription.subscription_id)
+    )
 
 
 def _send_confirmed_subscription_mail(context):
@@ -63,3 +66,16 @@ def new(request):
             'form': SubscriptionForm()
         }
     )
+
+
+def detail(request, subscription_id):
+    try:
+        subscription = Subscription.objects.get(
+            subscription_id=subscription_id
+        )
+    except Subscription.DoesNotExists:
+        raise Http404
+
+    return render(request, 'subscriptions/detail.html', {
+        'subscription': subscription
+    })
