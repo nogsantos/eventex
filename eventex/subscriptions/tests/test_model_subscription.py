@@ -23,3 +23,7 @@ class SubscriptionModelTest(TestCase):
     def test_created_at(self):
         """Should have an auto created_at attr"""
         self.assertIsInstance(self.obj.created_at, datetime)
+
+    def test_str(self):
+        """Should return an instance of subscription when subscription is instanciated"""  # noqa
+        self.assertEqual('Fabricio Nogueira', str(self.obj))
