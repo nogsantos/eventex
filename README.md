@@ -105,6 +105,12 @@ Para executar as migrations no heroku, no terminal
 heroku run python manage.py migrate
 ```
 
+Criar o superuser do django
+
+```bash
+heroku run python manage.py createsuperuser
+```
+
 **Habilita sendgrid para envio de emails**
 
 > Ao abrir a documentação do sendgrind, no heroku está exemplificado usando o pacote do próprio sendgrid, sendo necessário a instalação dele no projeto para isso. No caso, nesse projeto, não será utilizado esse pacote, usaremos o próprio smtp para isso.
@@ -145,4 +151,12 @@ O comando `dumpdata` gera um dump em `json` dos modelos criados nos apps para vi
 
 ```bash
 python manage.py dumpdata --indent 4 subscriptions
+```
+
+## Django admin
+
+**Create super user**
+
+```bash
+python manage.py createsuperuser
 ```
