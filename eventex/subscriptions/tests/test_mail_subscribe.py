@@ -34,7 +34,8 @@ class SubscribeMailBody(TestCase):
             'nogsantos@mail.com',
             '62 9 9116-1686',
         ]
+
         # Using Subtest
-        for content in contents:
-            with self.subTest():
+        with self.subTest():
+            for content in contents:
                 self.assertIn(content, self.email.body)

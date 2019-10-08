@@ -12,6 +12,7 @@ class SubscriptionModelAdmin(admin.ModelAdmin):
         'phone',
         'created_at',
         'subscribed_today',
+        'subscription_id',
     )
     # Show on list a date navigator
     # Enable navigation by date. Pass the date fields
@@ -24,6 +25,7 @@ class SubscriptionModelAdmin(admin.ModelAdmin):
         'email',
         'phone',
         'created_at',
+        'subscription_id',
     )
     # Show on rigth side a filter for list, with defined values
     list_filter = ('created_at',)

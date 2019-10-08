@@ -1,7 +1,7 @@
 Ol&aacute; {{ name }}!
 Muito obrigado por inscrever-se no Eventex
 
-Estes foram os dados que voc&eacute; nos forneceu em sua inscri&ccedil;&atilde;o:
+Estes foram os dados que voc&ecirc; nos forneceu em sua inscri&ccedil;&atilde;o:
 
 Nome:&nbsp;{{ name }}
 CPF:&nbsp;{{ cpf }}
