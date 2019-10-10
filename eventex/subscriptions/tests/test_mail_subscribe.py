@@ -1,5 +1,6 @@
 from django.core import mail
 from django.test import TestCase
+from django.shortcuts import resolve_url as r
 
 
 class SubscribeMailBody(TestCase):
@@ -11,7 +12,7 @@ class SubscribeMailBody(TestCase):
             email="nogsantos@mail.com",
             phone="62 9 9116-1686",
         )
-        self.client.post('/subscriptions/', data)
+        self.client.post(r('subscriptions:new'), data)
         # O object autbox guarda uma lista dos emails enviados
         self.email = mail.outbox[0]
 

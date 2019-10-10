@@ -2,17 +2,19 @@ import unittest
 
 from django.core import mail
 from django.test import TestCase
+from django.shortcuts import resolve_url as r
+
 from eventex.subscriptions.forms import SubscriptionForm
 from eventex.subscriptions.models import Subscription
 
 
-class SubscribeGet(TestCase):
+class SubscriptionsNewGet(TestCase):
 
     def setUp(self):
         """
         Tests initialize
         """
-        self.response = self.client.get('/subscriptions/')
+        self.response = self.client.get(r('subscriptions:new'))
         self.form = self.response.context['form']
 
     def test_subscriptions_request_success_status_code(self):
@@ -46,7 +48,7 @@ class SubscribeGet(TestCase):
         self.assertIsInstance(self.form, SubscriptionForm)
 
 
-class SubscribePostValid(TestCase):
+class SubscriptionsNewPostValid(TestCase):
     def setUp(self):
         """Tests initialize"""
         self.data = dict(
@@ -56,14 +58,14 @@ class SubscribePostValid(TestCase):
             email="nogsantos@mail.com",
             phone="62 9 9116-1686",
         )
-        self.response = self.client.post('/subscriptions/', self.data)
+        self.response = self.client.post(r('subscriptions:new'), self.data)
 
     @unittest.skip('The value is dynamic generated. Must fix that on test')
     def test_post(self):
         """Should redirect to subscription when request is correct"""  # noqa
         self.assertRedirects(
             self.response,
-            '/subscription/{}/'.format(self.data['subscription_id'])
+            r('subscriptions:detail', '241c7891-0df5-4dbf-8c76-5c75d274b782')
         )
 
     def test_send_subscribe_email(self):
@@ -78,11 +80,11 @@ class SubscribePostValid(TestCase):
         self.assertTrue(Subscription.objects.exists())
 
 
-class SubscribePostInvalid(TestCase):
+class SubscriptionsNewPostInvalid(TestCase):
 
     def setUp(self):
         """Tests initialize"""
-        self.response = self.client.post('/subscriptions/', {})
+        self.response = self.client.post(r('subscriptions:new'), {})
 
     def test_post(self):
         """Should not redirect when POST is invalid"""  # noqa
@@ -108,7 +110,7 @@ class SubscribePostInvalid(TestCase):
 
 
 @unittest.skip('To be removed')
-class SubscribeSuccessMessageTest(TestCase):
+class SubscriptionsNewSuccessMessageTest(TestCase):
     """
     This test was not removed to demonstrate how to use unittest.skip
     """
@@ -122,7 +124,8 @@ class SubscribeSuccessMessageTest(TestCase):
             phone="62 9 9116-1686",
         )
         # follow=True define que o redirecionamento no post seja seguido
-        self.response = self.client.post('/subscriptions/', data, follow=True)
+        self.response = self.client.post(
+            r('subscriptions:new'), data, follow=True)
 
     def test_message(self):
         """Should render a success message when for is valid"""  # noqa

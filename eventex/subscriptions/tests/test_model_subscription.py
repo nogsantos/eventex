@@ -1,6 +1,5 @@
 from datetime import datetime
 from django.test import TestCase
-# from mock import patch
 
 from eventex.subscriptions.models import Subscription
 
