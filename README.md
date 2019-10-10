@@ -160,3 +160,54 @@ python manage.py dumpdata --indent 4 subscriptions
 ```bash
 python manage.py createsuperuser
 ```
+
+## Expressões regulares
+
+### Módulos do python
+
+- `match`: `re.match('abc', 'abc')`
+- `search`: `re.search('abc', 'efgabc')`
+- `findall`: `re.findall('abc', '123abc456abc')`
+
+> Metacaracteres das expressões regulares.
+> Ponto (.) == qualquer caracter, exceto nova linha (\n)
+> Âncoras (^\$) == início e fim de string
+> Classe de caracter ([])
+
+### Sequências especiais definidas por padrão
+
+Todas a sequencias especiais usam a `\`
+
+- `\d` == [0-9]
+- `\D` == [^0-9] **Negação da classe**
+- `\s` == [\t\n\r\f\v]
+- `\S` == [^\t\n\r\f\v] **Negação da classe**
+- `\w` == [a-zA-Z0-9_]
+- `\W` == [^a-za-z0-9_] **Negação da classe**
+
+> É importante e recomendado utilizar o `r` raw string para evitar que o python interprete caracteres especiais na avaliação do pattern. Ex.: `match(r'\\section', '\\section\n')`
+
+### Meta characteres
+
+- `｜` pipe, representa o `OR`
+
+### Repetições
+
+Usa-se a notação com `{}`
+
+**Quantidades específicas de repetições**
+
+- `{int}` Exatamente a quantidade de digitos
+
+```regex
+match(r'\d{4}', '123456')
+# Encontra '1234'
+```
+
+**Quantidades mínima de repetições**
+
+- `{from, to}` de até
+
+```regex
+match(r'\d{2, }', '123456')
+```
