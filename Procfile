@@ -1,1 +1,1 @@
-web: gunicorn eventex.wsgi --log-file -
+web: newrelic-admin run-program gunicorn eventex.wsgi --log-file -
