@@ -26,3 +26,7 @@ class SubscriptionModelTest(TestCase):
     def test_str(self):
         """Should return an instance of subscription when subscription is instanciated"""  # noqa
         self.assertEqual('Fabricio Nogueira', str(self.obj))
+
+    def test_paid(self):
+        """Should be false when created"""
+        self.assertFalse(self.obj.paid)
