@@ -34,6 +34,22 @@ class SubscriptionFormTest(TestCase):
         # do formulário já validados e sanitizados
         self.assertEqual('Fabricio Nogueira', form.cleaned_data['name'])
 
+    def test_email_is_optional(self):
+        """Should be optional when email is empty"""
+        form = self.make_validated_form(email='')
+        self.assertFalse(form.errors)
+
+    def test_phone_is_optional(self):
+        """Should be optional when phone is empty"""
+        form = self.make_validated_form(phone='')
+        self.assertFalse(form.errors)
+
+    def test_must_inform_email_or_phone(self):
+        """Should be optional when email or phone is empty not both"""
+        form = self.make_validated_form(phone='', email='')
+        # __all__ is a especial errro from form. He list all error in form
+        self.assertListEqual(['__all__'], list(form.errors))
+
     def assertFormErrorCode(self, form, field, code):
         errors = form.errors.as_data()
         errors_list = errors[field]

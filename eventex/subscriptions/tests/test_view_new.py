@@ -130,3 +130,15 @@ class SubscriptionsNewSuccessMessageTest(TestCase):
     def test_message(self):
         """Should render a success message when for is valid"""  # noqa
         self.assertContains(self.response, 'Inscrição realizada com sucesso!')
+
+
+class TemplateRegressionTest(TestCase):
+    def test_template_has_non_field_erros(self):
+        invalid_data = dict(
+            name='Fabricio Nogueira',
+            cpf='01234567890'
+        )
+
+        response = self.client.post(r('subscriptions:new'), invalid_data)
+
+        self.assertContains(response, '<ul class="errorlist nonfield">')
