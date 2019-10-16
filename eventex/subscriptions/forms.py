@@ -17,8 +17,8 @@ def validate_cpf(value):
 class SubscriptionForm(forms.Form):
     name = forms.CharField(label='Nome')
     cpf = forms.CharField(label='CPF', validators=[validate_cpf])
-    email = forms.EmailField(label='Email')
-    phone = forms.CharField(label='Telefone')
+    email = forms.EmailField(label='Email', required=False)
+    phone = forms.CharField(label='Telefone', required=False)
 
     def clean_name(self):
         """
@@ -47,7 +47,22 @@ class SubscriptionForm(forms.Form):
 
         # O método é chamado após o cleaned_data, desse forma,
         # já existirá um valor associado ao campo.
-        name = self.cleaned_data['name']
+        name = self.cleaned_data.get('name')
 
         words = (w.capitalize() for w in name.split())
         return ' '.join(words)
+
+    def clean(self):
+        """
+        Especial method.
+        The clean method is called after all fields was validated, after cleaned_data is fully filled.
+        On form, this is the moment when we can evaluate and manipulate all fields in the form
+        """  # noqa
+
+        if (not self.cleaned_data.get('email') and
+                not self.cleaned_data.get('phone')):
+
+            raise ValidationError('Informe seu e-mail ou telefone')
+
+        # After validations, it's important return the cleaned_data!
+        return self.cleaned_data
