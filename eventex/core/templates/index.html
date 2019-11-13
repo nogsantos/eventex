@@ -30,40 +30,12 @@
       type="text/css"
     />
 
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-
-    <script src="{% static 'js/jquery-1.11.0.min.js'%}"></script>
-    <script src="{% static 'js/jquery.stellar.min.js'%}"></script>
-    <script src="{% static 'js/smooth-scroll.js'%}"></script>
-    <script src="{% static 'js/retina-1.1.0.min.js'%}"></script>
-    <script src="{% static 'js/main.js'%}"></script>
   </head>
 
   <body>
-    <div class="header-frame header-frame-absolute  row">
-      <header
-        class="header header-inline min-h-3 row desktop-12 container"
-        role="banner"
-      >
-        <div class="site-logo">
-          <h1><a href="{% url 'home' %}" rel="home">Eventex</a></h1>
-          <p class="site-description screen-reader-only">
-            O maior encontro hacker do mundo!
-          </p>
-        </div>
-
-        <nav class="nav-inline" role="navigation">
-          <a href="javascript:void(0);" class="nav-mobile"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <ul>
-            <li><a data-scroll href="#overview">Conferência</a></li>
-            <li><a data-scroll href="#sponsors">Patrocinadores</a></li>
-            <li><a data-scroll href="#register">Inscrição</a></li>
-            <li><a data-scroll href="#venue">Local</a></li>
-          </ul>
-        </nav>
-      </header>
+    <!-- Header-->
+    <div class="header-frame header-frame-absolute row">
+      {% include 'nav.html' only %}
     </div>
 
     <!-- TOP -->
@@ -71,6 +43,18 @@
       <div class="countdown text-align-center row desktop-12 container">
         <h1 class="uppercase">Eventex</h1>
         <h3>Brasil</h3>
+      </div>
+    </section>
+
+    <section id="speakers">
+      <div class="speakers text-align-center row desktop-8 padding-bottom-2 container">
+        <h2>Palestrantes Convidados</h2>
+        {% for speaker in speakers %}
+        <div class="desktop-4">
+          <img src="{{speaker.photo}}" alt="{{speaker.name}}" width="200">
+          <h4>{{speaker.name}}</h4>
+        </div>
+        {% endfor %}
       </div>
     </section>
 
@@ -198,5 +182,13 @@
         </div>
       </div>
     </section>
+
+   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+    <script src="{% static 'js/jquery-1.11.0.min.js'%}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js'%}"></script>
+    <script src="{% static 'js/smooth-scroll.js'%}"></script>
+    <script src="{% static 'js/retina-1.1.0.min.js'%}"></script>
+    <script src="{% static 'js/main.js'%}"></script>
   </body>
 </html>
