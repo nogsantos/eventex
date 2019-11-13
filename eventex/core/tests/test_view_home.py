@@ -3,6 +3,16 @@ from django.test import TestCase
 
 
 class HomeTest(TestCase):
+    """
+        Utilizando fixture como dados para os testes:
+
+        Para fazer o dump do dados do banco, no caso dos Speakers
+            ./manage.py dumpdata --indent 4 core.Speaker > keynotes.json
+        O resultado, arquivo  keynotes.json, deve ser copiado para um diretorio
+        no modulo chamado 'fixtures'
+        """
+    fixtures = ['keynotes.json']
+
     def setUp(self):
         self.response = self.client.get(r('home'))
 
@@ -21,6 +31,8 @@ class HomeTest(TestCase):
 
     def test_speakers(self):
         """Should show keynote speakers on home"""
+        # grace_url = r('speaker_detail', slug='gracie-hopper')
+        # turing_url = r('speaker_detail', slug='allan-turing')
         contents = [
             'Grace Hopper',
             'http://hbn.link/hopper-pic',

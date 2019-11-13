@@ -394,8 +394,15 @@ section header h2 {
 }
 
 .speakers img {
+    width: 200px;
     border-radius: 100%;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.speakers .speakers-details {
+    display: flex;
+    align-items: flex-start;
+    align-content: space-between;
 }
 
 /* Fim Customização */
