@@ -1,10 +1,20 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from eventex.core.models import Speaker
+from eventex.core.models import Speaker, Contact
+
+
+class ContactInLine(admin.TabularInline):
+    """
+    Cria no formulário, uma lista que permite adionar n valores relacionados.
+    """
+    model = Contact
+    extra = 1  # Define a quantidade inicial de valores apresentados, default 3.
 
 
 class SpeakerModelAdmin(admin.ModelAdmin):
+    inlines = [ContactInLine]
+
     # Enable to from a field, fill another with javascript
     # This field is a dictionary.
     # Params:
