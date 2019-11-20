@@ -3,6 +3,8 @@ from enum import IntEnum
 from django.db import models
 from django.shortcuts import resolve_url as r
 
+from eventex.core.manages import KindQuerySet, PeriodManager
+
 
 class ContactTypes(IntEnum):
     EMAIL = 0,
@@ -32,18 +34,24 @@ class Speaker(models.Model):
 
 
 class Contact(models.Model):
+    EMAIL = ContactTypes.EMAIL
+    PHONE = ContactTypes.PHONE
+
     speaker = models.ForeignKey('Speaker', on_delete=models.CASCADE,
                                 verbose_name='palestrante')
     kind = models.IntegerField('tipo', choices=ContactTypes.choices(),
                                default=ContactTypes.EMAIL)
     value = models.CharField('valor', max_length=255)
 
+    # objects = KindContactManager()
+    objects = KindQuerySet.as_manager()
+
     class Meta:
         verbose_name = 'contato'
         verbose_name_plural = 'contatos'
 
     def __str__(self):
-        return self.speaker.name
+        return self.value
 
 
 class Talk(models.Model):
@@ -52,6 +60,8 @@ class Talk(models.Model):
     description = models.TextField('descrição', blank=True, null=True)
     speakers = models.ManyToManyField('Speaker', blank=True,
                                       verbose_name='palestrantes')
+
+    objects = PeriodManager()
 
     class Meta:
         verbose_name = 'palestra'
