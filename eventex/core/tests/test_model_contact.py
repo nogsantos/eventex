@@ -39,4 +39,20 @@ class ContactModelTest(TestCase):
 
     def test_str(self):
         """Should return speaker name when get object string"""
-        self.assertEqual(self.speaker.name, str(self.contact))
+        self.assertEqual(self.contact.value, str(self.contact))
+
+
+class ContactManagerTest(TestCase):
+    def setUp(self):
+        self.contact, self.speaker = setup.contact()
+
+    def test_emails(self):
+        queryset = Contact.objects.emails()
+        expected = [self.contact.value]
+        self.assertQuerysetEqual(queryset, expected, lambda obj: obj.value)
+
+    def test_phones(self):
+        phone_contact, _ = setup.contact(ContactTypes.PHONE)
+        queryset = Contact.objects.phones()
+        expected = [phone_contact.value]
+        self.assertQuerysetEqual(queryset, expected, lambda obj: obj.value)

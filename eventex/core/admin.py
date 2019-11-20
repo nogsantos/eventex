@@ -23,7 +23,7 @@ class SpeakerModelAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
     # Values to display on list
-    list_display = ['photo_img', 'name', 'website_link']
+    list_display = ['photo_img', 'name', 'website_link', 'email', 'phone']
 
     def website_link(self, obj):
         return format_html(
@@ -31,6 +31,7 @@ class SpeakerModelAdmin(admin.ModelAdmin):
             obj.website
         )
 
+    website_link.allow_tags = True
     website_link.short_description = 'website'
 
     def photo_img(self, obj):
@@ -40,7 +41,18 @@ class SpeakerModelAdmin(admin.ModelAdmin):
             obj.name
         )
 
+    photo_img.allow_tags = True
     photo_img.short_description = 'foto'
+
+    def email(self, obj):
+        return obj.contact_set.emails().first()
+
+    email.short_description = 'Email'
+
+    def phone(self, obj):
+        return obj.contact_set.phones().first()
+
+    phone.short_description = 'phone'
 
 
 """Register the models on admin"""

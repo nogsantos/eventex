@@ -16,7 +16,7 @@ def speaker() -> Speaker:
     return speaker
 
 
-def contact() -> [Contact, Speaker]:
+def contact(kind=ContactTypes.EMAIL) -> [Contact, Speaker]:
     name = random_str(10)
     sur_name = random_str(20)
     _speaker = Speaker.objects.create(
@@ -27,11 +27,18 @@ def contact() -> [Contact, Speaker]:
         description=f'{random_description(120)}'
     )
 
-    _contact = Contact.objects.create(
-        speaker=_speaker,
-        kind=ContactTypes.EMAIL,
-        value=f'{random_str()}@{random_str()}.com'
-    )
+    if kind == ContactTypes.PHONE:
+        _contact = Contact.objects.create(
+            speaker=_speaker,
+            kind=ContactTypes.PHONE,
+            value='99 99999-9999'
+        )
+    else:
+        _contact = Contact.objects.create(
+            speaker=_speaker,
+            kind=ContactTypes.EMAIL,
+            value=f'{random_str()}@{random_str()}.com'
+        )
 
     return _contact, _speaker
 
