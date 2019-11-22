@@ -2,7 +2,7 @@
 import random
 import string
 
-from eventex.core.models import Speaker, Contact, ContactTypes, Talk
+from eventex.core.models import Speaker, Contact, ContactTypes, Talk, Course
 
 
 def speaker() -> Speaker:
@@ -57,6 +57,17 @@ def talk():
         )
     ])
     return _talks
+
+
+def course():
+    _course = Course.objects.create(
+        title=random_str(),
+        start='09:00',
+        description=random_description(50),
+        slots=20
+    )
+
+    return _course
 
 
 def random_str(size=12, chars=string.ascii_lowercase + string.digits) -> str:

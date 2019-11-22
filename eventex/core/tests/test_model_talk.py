@@ -2,7 +2,8 @@
 from django.test import TestCase
 
 from eventex.core.manages import PeriodManager
-from eventex.core.models import Talk
+from eventex.core.models import Talk, Course
+from eventex.core.tests import setup
 
 
 class TalkModelTest(TestCase):
@@ -77,3 +78,25 @@ class PeriodManagerTest(TestCase):
         qs = Talk.objects.at_afternoon()
         expected = ['12:00:00 Afternoon']
         self.assertQuerysetEqual(qs, expected, lambda o: str(o))
+
+
+class CourseModelTest(TestCase):
+
+    def setUp(self):
+        self.course = setup.course()
+
+    def test_create(self):
+        self.assertTrue(Course.objects.exists())
+
+    def test_speaker(self):
+        """Should create a speaker with related manage"""
+        self.course.speakers.create(
+            name='Fabricio Nogueira',
+            slug='fabricio-nogueira',
+            website='http://fabricionogueira.me'
+        )
+        self.assertEqual(1, self.course.speakers.count())
+
+    def test_manager(self):
+        """Should course has period manager instance"""
+        self.assertIsInstance(Course.objects, PeriodManager)

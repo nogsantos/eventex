@@ -54,7 +54,8 @@ class Contact(models.Model):
         return self.value
 
 
-class Talk(models.Model):
+class Activity(models.Model):
+    """Abstract Base Class ABC - This class will not be created on database"""
     title = models.CharField('título', max_length=200)
     start = models.TimeField('hora início', blank=True, null=True)
     description = models.TextField('descrição', blank=True, null=True)
@@ -64,8 +65,24 @@ class Talk(models.Model):
     objects = PeriodManager()
 
     class Meta:
+        abstract = True  # Indicates that the class is an abstract model
         verbose_name = 'palestra'
         verbose_name_plural = 'palestras'
 
     def __str__(self):
         return f'{self.start} {self.title}'
+
+
+class Talk(Activity):
+    pass
+
+
+class Course(Activity):
+    slots = models.IntegerField('lugares')
+
+    class Meta:
+        verbose_name = 'curso'
+        verbose_name_plural = 'cursos'
+
+    def __str__(self):
+        return f'{self.slots} {self.start} {self.title}'
