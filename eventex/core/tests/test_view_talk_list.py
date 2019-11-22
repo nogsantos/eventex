@@ -2,7 +2,7 @@
 from django.shortcuts import resolve_url as r
 from django.test import TestCase
 
-from eventex.core.models import Talk, Speaker
+from eventex.core.models import Talk, Speaker, Course
 
 
 class TalkListGet(TestCase):
@@ -17,6 +17,12 @@ class TalkListGet(TestCase):
             start='13:00',
             description='Talk description'
         )
+        c1 = Course.objects.create(
+            title='Course title',
+            start='09:00',
+            description='Course description',
+            slots=20
+        )
 
         speaker = Speaker.objects.create(
             name='Fabricio Nogueira',
@@ -26,6 +32,7 @@ class TalkListGet(TestCase):
 
         t1.speakers.add(speaker)
         t2.speakers.add(speaker)
+        c1.speakers.add(speaker)
 
         self.response = self.client.get(r('talk_list'))
 
@@ -43,9 +50,12 @@ class TalkListGet(TestCase):
             (2, 'Talk title'),
             (1, '10:00'),
             (1, '13:00'),
-            (2, '/speakers/fabricio-nogueira/'),
-            (2, 'Fabricio Nogueira'),
+            (3, '/speakers/fabricio-nogueira/'),
+            (3, 'Fabricio Nogueira'),
             (2, 'Talk description'),
+            (1, 'Course title'),
+            (1, '09:00'),
+            (1, 'Course description')
         ]
 
         for count, expected in contents:
@@ -54,7 +64,7 @@ class TalkListGet(TestCase):
 
     def test_context(self):
         """Should ensure that the list has a context"""  # noqa
-        variables = ['morning_talks', 'afternoon_talks']
+        variables = ['morning_talks', 'afternoon_talks', 'courses']
 
         for key in variables:
             with self.subTest():
