@@ -55,7 +55,14 @@ class SpeakerModelAdmin(admin.ModelAdmin):
     phone.short_description = 'phone'
 
 
+class TalkModelAdmin(admin.ModelAdmin):
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(course=None)
+
+
 """Register the models on admin"""
 admin.site.register(Speaker, SpeakerModelAdmin)
-admin.site.register(Talk)
+admin.site.register(Talk, TalkModelAdmin)
 admin.site.register(Course)

@@ -64,7 +64,7 @@ class TalkListGet(TestCase):
 
     def test_context(self):
         """Should ensure that the list has a context"""  # noqa
-        variables = ['morning_talks', 'afternoon_talks', 'courses']
+        variables = ['morning_talks', 'afternoon_talks']
 
         for key in variables:
             with self.subTest():

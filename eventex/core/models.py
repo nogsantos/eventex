@@ -54,8 +54,12 @@ class Contact(models.Model):
         return self.value
 
 
+"""
+Abstract Base Class ABC - This class will not be created on database
+
+Example of ABC use
+>>
 class Activity(models.Model):
-    """Abstract Base Class ABC - This class will not be created on database"""
     title = models.CharField('título', max_length=200)
     start = models.TimeField('hora início', blank=True, null=True)
     description = models.TextField('descrição', blank=True, null=True)
@@ -66,6 +70,7 @@ class Activity(models.Model):
 
     class Meta:
         abstract = True  # Indicates that the class is an abstract model
+        ordering = ['start']
         verbose_name = 'palestra'
         verbose_name_plural = 'palestras'
 
@@ -75,10 +80,55 @@ class Activity(models.Model):
 
 class Talk(Activity):
     pass
+>>
+"""
 
 
-class Course(Activity):
+class Talk(models.Model):
+    title = models.CharField('título', max_length=200)
+    start = models.TimeField('hora início', blank=True, null=True)
+    description = models.TextField('descrição', blank=True, null=True)
+    speakers = models.ManyToManyField('Speaker', blank=True,
+                                      verbose_name='palestrantes')
+
+    objects = PeriodManager()
+
+    class Meta:
+        ordering = ['start']
+        verbose_name = 'palestra'
+        verbose_name_plural = 'palestras'
+
+    def __str__(self):
+        return f'{self.start} {self.title}'
+
+
+"""
+Example of migration from ABC to MTI models
+"""
+
+
+# class CourseOld(Activity):
+#     slots = models.IntegerField('lugares')
+#
+#     class Meta:
+#         verbose_name = 'curso'
+#         verbose_name_plural = 'cursos'
+#
+#     def __str__(self):
+#         return f'{self.slots} {self.start} {self.title}'
+
+
+class Course(Talk):
+    """
+    To migrate without lost data from CourseOld to Course,
+    generate the migration file:
+
+    >> ./manage.py makemigrations --empty -n course_abc_to_mti core
+
+    """
     slots = models.IntegerField('lugares')
+
+    objects = PeriodManager()
 
     class Meta:
         verbose_name = 'curso'
