@@ -2,7 +2,8 @@
 import random
 import string
 
-from eventex.core.models import Speaker, Contact, ContactTypes, Talk, Course
+from eventex.core.models import Speaker, Contact, ContactTypes, Talk, \
+    Course
 
 
 def speaker() -> Speaker:

@@ -60,6 +60,10 @@ class TalkModelTest(TestCase):
         field = Talk._meta.get_field('start')
         self.assertTrue(field.null)
 
+    def test_ordering(self):
+        """Should ensure the default list order"""
+        self.assertListEqual(['start'], Talk._meta.ordering)
+
 
 class PeriodManagerTest(TestCase):
     def setUp(self):
@@ -100,3 +104,7 @@ class CourseModelTest(TestCase):
     def test_manager(self):
         """Should course has period manager instance"""
         self.assertIsInstance(Course.objects, PeriodManager)
+
+    def test_ordering(self):
+        """Should ensure the default list order"""
+        self.assertListEqual(['start'], Course._meta.ordering)
