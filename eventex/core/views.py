@@ -1,11 +1,37 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView
 
 from eventex.core.models import Speaker, Talk
 
+# class GenericHomeView(MultipleObjectMixin, TemplateView):
+""" Method already implemented by TemplateView
 
-def home(request):
-    speakers = Speaker.objects.all()
-    return render(request, 'index.html', {'speakers': speakers})
+def get(self, *args, **kwargs):
+    context = self.get_context_data()
+    return self.render_to_response(context)
+"""
+
+""" Method already implemented by TemplateResponseMixin
+
+def render_to_response(self, context):
+    return render(self.request, self.template_name, context)
+"""
+
+""" Method and attributes already implemented by MultipleObjectMixin
+
+object_list = None
+context_object_name = None
+
+def get_context_data(self, **kwargs):
+    context = {self.context_object_name: self.object_list}
+    context.update(kwargs)
+    return context
+"""
+
+
+class HomeView(ListView):
+    template_name = 'index.html'
+    model = Speaker
 
 
 def speaker_detail(request, slug):
